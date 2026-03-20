@@ -1,9 +1,10 @@
 from . import connect4helper
 
 class MiniMaxBot:   # Bot is max player, human is min player
-    def __init__(self, bot, human):
+    def __init__(self, bot, human, maxdepth):
         self.bot = bot
         self.human = human
+        self.maxdepth = max(maxdepth, 1)
 
     class GameNode:
         def __init__(self, grid, move, player_to_move, bot, human):
@@ -29,7 +30,7 @@ class MiniMaxBot:   # Bot is max player, human is min player
     def build_tree(self, node, steps):
         if steps == 0 or node.value != 0:
             return
-        next_player_to_move = "y" if node.player_to_move == "r" else "y"
+        next_player_to_move = "y" if node.player_to_move == "r" else "r"
         
         for move in connect4helper.valid_moves(node.grid):
             new_grid = connect4helper.copy_and_move(node.grid, move, node.player_to_move)
@@ -62,6 +63,6 @@ class MiniMaxBot:   # Bot is max player, human is min player
     def move(self, grid, player_to_move):
 
         node = MiniMaxBot.GameNode(grid, None, player_to_move, self.bot, self.human)
-        self.build_tree(node, 6)
+        self.build_tree(node, self.maxdepth)
         self.mini_max(node, max_mode=True)
         return self.pick_move(node)

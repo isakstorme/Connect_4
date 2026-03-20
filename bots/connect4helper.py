@@ -13,7 +13,7 @@ def valid_moves(grid):
     moves = []
     for c in range(w):
         if grid[h - 1][c] == "-":
-            moves.append[c]
+            moves.append(c)
     return moves
 
 def copy_and_move(grid, c, p):
@@ -28,6 +28,8 @@ def copy_and_move(grid, c, p):
     if r == h:
         return
     newgrid[r][c] = p
+    
+    return newgrid
 
 
 def is_row(grid, r, p):

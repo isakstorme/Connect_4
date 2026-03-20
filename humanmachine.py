@@ -13,8 +13,8 @@ def human_vs_machine():
     bot_choice = int(input("if you want to play against randomBot, type 1, if you want to play against MiniMaxBot type 2"))
 
     bot = RandomBot()
-    #if bot_choice == 2:
-    #    bot = MiniMaxBot(human=human, bot=botsign)
+    if bot_choice == 2:
+        bot = MiniMaxBot(human=human, bot=botsign, maxdepth=4)
 
     game = Connect4()
     player_to_move = "y"
