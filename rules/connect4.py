@@ -18,6 +18,7 @@ class Connect4:
         return result
     
     def display_position(self):
+        print("0  ", " 1  ", " 2  ", " 3  ", " 4  ", " 5  ", " 6")
         for r in range(self.height - 1, -1, -1):
             print(
                 self.grid[r][0], "  ", self.grid[r][1], "  ", self.grid[r][2] 

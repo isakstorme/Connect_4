@@ -1,6 +1,7 @@
 from rules.connect4 import Connect4
 from bots.randombot import RandomBot
 from bots.minimaxbot import MiniMaxBot
+from bots.alphabetabot import AlphaBetaBot
 
 def human_vs_machine():
     player_choice = (input("if you want to start, type y, else type r"))
@@ -10,12 +11,13 @@ def human_vs_machine():
         human = "r"
         botsign = "y"
     
-    bot_choice = int(input("if you want to play against randomBot, type 1, if you want to play against MiniMaxBot type 2"))
+    bot_choice = int(input("if you want to play against randomBot, type 1\nif you want to play against MiniMaxBot type 2\nif you want to play against AlphaBetaBot type 3"))
 
     bot = RandomBot()
     if bot_choice == 2:
-        bot = MiniMaxBot(human=human, bot=botsign, maxdepth=4)
-
+        bot = MiniMaxBot(opponent=human, bot=botsign, maxdepth=4)
+    elif bot_choice == 3:
+        bot = AlphaBetaBot(opponent=human, bot=botsign, maxdepth=8)
     game = Connect4()
     player_to_move = "y"
     while not game.game_finished:

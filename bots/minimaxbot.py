@@ -1,9 +1,9 @@
 from . import connect4helper
 
 class MiniMaxBot:   # Bot is max player, human is min player
-    def __init__(self, bot, human, maxdepth):
+    def __init__(self, bot, opponent, maxdepth):
         self.bot = bot
-        self.human = human
+        self.opponent = opponent
         self.maxdepth = max(maxdepth, 1)
 
     class GameNode:
@@ -13,13 +13,13 @@ class MiniMaxBot:   # Bot is max player, human is min player
             self.player_to_move = player_to_move
             self.children = []
             self.bot = bot
-            self.human = human
+            self.opponent = human
             self.value = self.evaluate()
         
         def evaluate(self):
             if connect4helper.is_winning(self.grid, self.bot):
                 return 100
-            elif connect4helper.is_winning(self.grid, self.human):
+            elif connect4helper.is_winning(self.grid, self.opponent):
                 return -100
             else:
                 return 0
@@ -27,14 +27,14 @@ class MiniMaxBot:   # Bot is max player, human is min player
         def add_child(self, node):
             self.children.append(node)
 
-    def build_tree(self, node, steps):
+    def build_tree(self, node, steps):  # This implementation is probably not most typical. Building the tree is typically done in the mini_max function as i understand it, as in AlphaBetaBot
         if steps == 0 or node.value != 0:
             return
         next_player_to_move = "y" if node.player_to_move == "r" else "r"
         
         for move in connect4helper.valid_moves(node.grid):
             new_grid = connect4helper.copy_and_move(node.grid, move, node.player_to_move)
-            new_node = MiniMaxBot.GameNode(new_grid, move, next_player_to_move, self.bot, self.human)
+            new_node = MiniMaxBot.GameNode(new_grid, move, next_player_to_move, self.bot, self.opponent)
             node.children.append(new_node)
             self.build_tree(new_node, steps - 1)
 
@@ -62,7 +62,7 @@ class MiniMaxBot:   # Bot is max player, human is min player
 
     def move(self, grid, player_to_move):
 
-        node = MiniMaxBot.GameNode(grid, None, player_to_move, self.bot, self.human)
+        node = MiniMaxBot.GameNode(grid, None, player_to_move, self.bot, self.opponent)
         self.build_tree(node, self.maxdepth)
         self.mini_max(node, max_mode=True)
         return self.pick_move(node)

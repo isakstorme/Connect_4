@@ -1,0 +1,1 @@
+# Here I plan doing a bot that is as good as I can manage.
