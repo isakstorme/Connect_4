@@ -1,4 +1,5 @@
 from . import connect4helper
+from .gamenode import GameNode
 
 class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
     def __init__(self, bot, opponent, maxdepth):
@@ -8,27 +9,6 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
         self.INF = 1000000
         self.WIN = 1000
         self.LOSS = -1000
-    
-
-    class GameNode:
-        def __init__(self, grid, move, player_to_move, bot, opponent):
-            self.grid = grid
-            self.move = move
-            self.player_to_move = player_to_move
-            self.bot = bot
-            self.human = opponent
-            self.value = 0
-        
-        def children(self):
-
-            next_player_to_move = "y" if self.player_to_move == "r" else "r"
-            children = []
-
-            for move in connect4helper.valid_moves(self.grid):
-                new_grid = connect4helper.copy_and_move(self.grid, move, self.player_to_move)
-                new_node = AlphaBetaBot.GameNode(new_grid, move, next_player_to_move, self.bot, self.human)
-                children.append(new_node)
-            return children
     
     
     def evaluate(self, node): # One could imagine this class but where the function evaluate is taken as an argument to have high flexibility. (strategy pattern?)
@@ -80,5 +60,5 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
 
     def move(self, grid, player_to_move):
 
-        node = AlphaBetaBot.GameNode(grid, None, player_to_move, self.bot, self.opponent)
+        node = GameNode(grid, None, player_to_move, self.bot, self.opponent)
         return self.pick_move(node)
