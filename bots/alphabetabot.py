@@ -11,22 +11,22 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
         self.LOSS = -1000
     
     
-    def evaluate(self, node): # One could imagine this class but where the function evaluate is taken as an argument to have high flexibility. (strategy pattern?)
-        if connect4helper.is_winning(node.grid, self.bot):
+    def evaluate(self, grid, player_to_move): # One could imagine this class but where the function evaluate is taken as an argument to have high flexibility. (strategy pattern?)
+        if connect4helper.is_winning(grid, self.bot):
             return self.WIN
-        elif connect4helper.is_winning(node.grid, self.opponent):
+        elif connect4helper.is_winning(grid, self.opponent):
             return self.LOSS
         else:
             bad_height = 0
             for c in range(7):
                 r = 5
-                while node.grid[r][c] != node.player_to_move and r >= 0:
+                while grid[r][c] != player_to_move and r >= 0:
                     r -= 1
                 bad_height -= r * 5
             return bad_height
 
     def alpha_beta(self, node, depth, alpha, beta, max_mode):  # max_mode = True or False 
-        value = self.evaluate(node)
+        value = self.evaluate(node.grid, node.player_to_move)
         if depth == 0 or value == self.WIN or value == self.LOSS:
             return value, None
         
@@ -54,7 +54,6 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
 
     def pick_move(self, node):
         move = self.alpha_beta(node=node, depth=self.maxdepth, alpha=-self.INF, beta=self.INF, max_mode=True)[1]
-        #print(self.alpha_beta(node=node, depth=self.maxdepth, alpha=-self.INF, beta=self.INF, max_mode=True)[0])
         return move
         
 

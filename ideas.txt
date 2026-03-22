@@ -1,0 +1,6 @@
+* Change so alphabetabot is incentivised to find fastest win if it is winning.
+
+* Maybe implement strategy pattern where alphabetabot takes
+  a function evaluate or subclasses of evaluatestrategy.
+
+* Restructure so files are located in reasonable places
