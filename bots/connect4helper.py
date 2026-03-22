@@ -135,6 +135,7 @@ def is_full(grid):
     
     return True
 
+
 def display_position(grid):
     h = len(grid)
 

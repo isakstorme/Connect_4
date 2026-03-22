@@ -4,3 +4,5 @@
   a function evaluate or subclasses of evaluatestrategy.
 
 * Restructure so files are located in reasonable places
+
+* Find a way to not duplicate  win and loss values for eval functions. I have it both in alphabetabot and in eval

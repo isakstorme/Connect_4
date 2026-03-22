@@ -1,33 +1,20 @@
-from . import connect4helper
 from .gamenode import GameNode
+from .import eval
 
 class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
-    def __init__(self, bot, opponent, maxdepth):
-        self.bot = bot
-        self.opponent = opponent
+    def __init__(self, botsign, opponentsign, maxdepth, evaluate=eval.evaluate):
+        self.botsign = botsign
+        self.opponentsign = opponentsign
         self.maxdepth = max(maxdepth, 1)
         self.INF = 1000000
         self.WIN = 1000
         self.LOSS = -1000
+        self.evaluate = evaluate
     
-    
-    def evaluate(self, grid, player_to_move): # One could imagine this class but where the function evaluate is taken as an argument to have high flexibility. (strategy pattern?)
-        if connect4helper.is_winning(grid, self.bot):
-            return self.WIN
-        elif connect4helper.is_winning(grid, self.opponent):
-            return self.LOSS
-        else:
-            bad_height = 0
-            for c in range(7):
-                r = 5
-                while grid[r][c] != player_to_move and r >= 0:
-                    r -= 1
-                bad_height -= r * 5
-            return bad_height
 
     def alpha_beta(self, node, depth, alpha, beta, max_mode):  # max_mode = True or False 
-        value = self.evaluate(node.grid, node.player_to_move)
-        if depth == 0 or value == self.WIN or value == self.LOSS:
+        value = self.evaluate(node)
+        if depth == 0 or node.bot_won or node.opponent_won or node.is_full:
             return value, None
         
         bestmove = None
@@ -39,7 +26,6 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
                     alpha = value
                     bestmove = child.move
                     if beta <= alpha:
-                        #print(beta)
                         break
         else:
             value = self.INF
@@ -59,5 +45,5 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
 
     def move(self, grid, player_to_move):
 
-        node = GameNode(grid, None, player_to_move, self.bot, self.opponent)
+        node = GameNode(grid, None, player_to_move, self.botsign, self.opponentsign)
         return self.pick_move(node)

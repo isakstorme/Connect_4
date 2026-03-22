@@ -17,7 +17,7 @@ def human_vs_machine():
     if bot_choice == 2:
         bot = MiniMaxBot(opponent=human, bot=botsign, maxdepth=4)
     elif bot_choice == 3:
-        bot = AlphaBetaBot(opponent=human, bot=botsign, maxdepth=8)
+        bot = AlphaBetaBot(opponentsign=human, botsign=botsign, maxdepth=8)
     game = Connect4()
     player_to_move = "y"
     while not game.game_finished:

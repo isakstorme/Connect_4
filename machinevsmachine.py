@@ -18,8 +18,8 @@ def machine_vs_machine():
     bot1sign = "y"
     bot2sign = "r"
 
-    bot1 = AlphaBetaBot(opponent=bot2sign, bot=bot1sign, maxdepth=bot1_depth) if bot1_choice == 2 else RandomBot()
-    bot2 = AlphaBetaBot(opponent=bot1sign, bot=bot2sign, maxdepth=bot2_depth) if bot2_choice == 2 else RandomBot()
+    bot1 = AlphaBetaBot(opponentsign=bot2sign, botsign=bot1sign, maxdepth=bot1_depth) if bot1_choice == 2 else RandomBot()
+    bot2 = AlphaBetaBot(opponentsign=bot1sign, botsign=bot2sign, maxdepth=bot2_depth) if bot2_choice == 2 else RandomBot()
 
     game = Connect4()
     player_to_move = "y"
