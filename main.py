@@ -14,7 +14,7 @@ class Main:
         self.MACHINE_VS_MACHINE = 3
         self.run()
 
-    def loop(self, screen, player1_is_bot = True, player2_is_bot = True, bot1 = AlphaBetaBot('y', 'r', 3), bot2 = AlphaBetaBot('y', 'r', 3)):
+    def loop(self, screen, player1_is_bot = True, player2_is_bot = True, bot1 = AlphaBetaBot('y', 'r', 7), bot2 = AlphaBetaBot('r', 'y', 7)):
         next_draw = [6, 6, 6, 6, 6, 6, 6]  # Shows newt row to draw for each square printed for each column
         game = Connect4()
         SQUARESIZE = self.SQUARESIZE
@@ -23,22 +23,51 @@ class Main:
         running = True
         while running:
             player_to_move = game.player_to_move
+            if player_to_move == 'y' and player1_is_bot:
+                c = bot1.move(game.grid, player_to_move)
+                self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+            elif player_to_move == 'r' and player2_is_bot:
+                c = bot2.move(game.grid, player_to_move)
+                self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                     pygame.quit()
                 
-
-                if player_to_move == 'y' and player1_is_bot:
-                    c = bot1.move(game.grid, player_to_move)
-                    self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
-                elif player_to_move == 'r' and player2_is_bot:
-                    c = bot2.move(game.grid, player_to_move)
-                    self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x = pygame.mouse.get_pos()[0]
                     c = x // SQUARESIZE
                     self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+            if game.game_drawn or game.yellow_wins or game.red_wins:
+                running = False
+        
+        self.printresult(screen, game)
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    pygame.quit()
+    
+    def printresult(self, screen, game):
+        w = 7 * self.SQUARESIZE
+        h = (6+1) * self.SQUARESIZE
+
+        pygame.font.init() # Probably not necessary
+
+        text = ""
+        if game.game_drawn:
+            text = "game was drawn"
+        elif game.yellow_wins:
+            text = "yellow (y) won"
+        else:
+            text = "red (r) won"
+
+        print(text)
+        font = pygame.font.Font(None, 64)
+        text = font.render('Player', True, (255, 255, 255))
+        textRect = pygame.Rect(0, self.SQUARESIZE, w, h) 
+        screen.blit(text, textRect)
 
     def move(self, screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c):
         game.move(c)
@@ -76,7 +105,7 @@ class Main:
         white = (255, 255, 255)
         blue = (0, 0, 255)
         black = (0, 0, 0)
-        # Drawwing background
+        # Drawwing background, there probably is an easy way of just drawing background.
         for r in range(6):
             for c in range(7):
                 rect = pygame.Rect((c)*SQUARESIZE, (r + 1)*SQUARESIZE, SQUARESIZE, SQUARESIZE)
@@ -101,7 +130,7 @@ class Main:
 
 
         if True:
-            self.machine_vs_machine(screen=screen)
+            self.human_vs_human(screen=screen)
 
 
 
