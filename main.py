@@ -24,20 +24,21 @@ class Main:
         while running:
             player_to_move = game.player_to_move
             if player_to_move == 'y' and player1_is_bot:
-                c = bot1.move(game.grid, player_to_move)
-                self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+                c = bot1.move(game.grid, player_to_move)  # Could change this to a seperate thread to avoid pygame from thinking it takes to long
+                self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
             elif player_to_move == 'r' and player2_is_bot:
                 c = bot2.move(game.grid, player_to_move)
-                self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    pygame.quit()
-                
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    x = pygame.mouse.get_pos()[0]
-                    c = x // SQUARESIZE
-                    self.move(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+                self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()
+
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        x = pygame.mouse.get_pos()[0]
+                        c = x // SQUARESIZE
+                        self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
             if game.game_drawn or game.yellow_wins or game.red_wins:
                 running = False
         
@@ -55,30 +56,33 @@ class Main:
 
         pygame.font.init() # Probably not necessary
 
-        text = ""
+        txt = ""
         if game.game_drawn:
-            text = "game was drawn"
+            txt = "game was drawn"
         elif game.yellow_wins:
-            text = "yellow (y) won"
+            txt = "yellow (y) won"
         else:
-            text = "red (r) won"
+            txt = "red (r) won"
 
-        print(text)
+        print(txt)
         font = pygame.font.Font(None, 64)
-        text = font.render('Player', True, (255, 255, 255))
-        textRect = pygame.Rect(0, self.SQUARESIZE, w, h) 
+        text = font.render(txt, True, (255, 255, 255))
+        textRect = pygame.Rect(0, 0, w, h) 
         screen.blit(text, textRect)
+        pygame.display.flip()
 
-    def move(self, screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c):
+    def move_graphics(self, screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c):
         game.move(c)
         game.display_position()
         new_player_to_move = game.player_to_move
+        print(player_to_move)
+        print("din mamma")
         if new_player_to_move != player_to_move: # If move was valid
+            print("din mamma!!!!!!")
             color = red if player_to_move == "r" else yellow
             pygame.draw.circle(screen, color, ((c + 0.5)*SQUARESIZE, ((next_draw[c] + 0.5)*SQUARESIZE)), SQUARESIZE/2)
             next_draw[c] -= 1
             pygame.display.flip()
-            time.sleep(0.5)
 
 
     def machine_vs_machine(self, screen):
@@ -88,7 +92,7 @@ class Main:
         self.loop(screen, False, False)
         
     def human_vs_machine(self, screen):
-        self.loop(screen, False, True)
+        self.loop(screen, True, False)
 
 
     def run(self):  
@@ -130,7 +134,7 @@ class Main:
 
 
         if True:
-            self.human_vs_human(screen=screen)
+            self.human_vs_machine(screen=screen)
 
 
 
