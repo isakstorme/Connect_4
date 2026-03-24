@@ -9,6 +9,7 @@ class Bot_thread(threading.Thread):
         self.opponentsign = opponentsign
         self.q_in = q_in
         self.q_out = q_out
+        self.daemon = True
 
     def run(self):
         while True:

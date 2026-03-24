@@ -59,20 +59,25 @@ class Main:
         red = (255, 0, 0)
         running = True
         
+        has_put = False
         while running:
             player_to_move = game.player_to_move
             if player_to_move == 'y' and player1_is_bot:
-                if q1_in.empty():
+                if q1_in.empty() and not has_put:
                     q1_in.put(game.grid)
+                    has_put = True
                 elif not q1_out.empty():
                     c = q1_out.get()
                     self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+                    has_put = False
             elif player_to_move == 'r' and player2_is_bot:
-                if q2_in.empty():
+                if q2_in.empty() and not has_put:
                     q2_in.put(game.grid)
+                    has_put = True
                 elif not q2_out.empty():
                     c = q2_out.get()
                     self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
+                    has_put = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -146,7 +151,7 @@ class Main:
 
     def run(self):  
 
-        mode = 3
+        mode = 2
 
         if mode == 1:
             GUI_thread = threading.Thread(target=self.human_vs_human)
@@ -168,6 +173,8 @@ class Main:
             bot1_thread = Bot_thread(bot1, 'y', 'r', q_in, q_out)
             bot1_thread.start()
         elif mode == 4:
+            bot1_waiting = True
+            bot2_waiting = True  
             q1_in = Queue()  # in signals in for bot_thread
             q1_out = Queue()
             q2_in = Queue() # in signals in for bot_thread
