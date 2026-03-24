@@ -15,7 +15,7 @@ class Main:
         self.MACHINE_VS_MACHINE = 3
         self.run()
 
-    def loop(self, player1_is_bot = True, player2_is_bot = True, q1_in = None, q1_out = None, q2_in = None, q2_out = None):
+    def loop(self, player1_is_bot = True, player2_is_bot = True, q1_in = None, q1_out = None, q2_in = None, q2_out = None): # Todo divide this function into several functions
         pygame.init()
 
         SQUARESIZE = self.SQUARESIZE
@@ -64,24 +64,23 @@ class Main:
             if player_to_move == 'y' and player1_is_bot:
                 if q1_in.empty():
                     q1_in.put(game.grid)
-                elif not q1_out.empty:
+                elif not q1_out.empty():
                     c = q1_out.get()
                     self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
             elif player_to_move == 'r' and player2_is_bot:
                 if q2_in.empty():
                     q2_in.put(game.grid)
-                elif not q2_out.empty:
+                elif not q2_out.empty():
                     c = q2_out.get()
                     self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
-                self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                     pygame.quit()
+                    return
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if player_to_move == 'y' and not player1_is_bot:
-                        print("hej")
                         x = pygame.mouse.get_pos()[0]
                         c = x // SQUARESIZE
                         self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
@@ -157,15 +156,15 @@ class Main:
             q_out = Queue()
             GUI_thread = threading.Thread(target=self.human_vs_machine, args=(q_in, q_out, True))
             GUI_thread.start()
-            bot1 = AlphaBetaBot('y', 'r', 7)
+            bot1 = AlphaBetaBot('r', 'y', 7)
             bot1_thread = Bot_thread(bot1, 'r', 'y', q_in, q_out)
             bot1_thread.start()
-        elif mode == 3:
+        elif mode == 3:    # When exiting the window in mode 3 it pops up again, fix!
             q_in = Queue()
             q_out = Queue()
             GUI_thread = threading.Thread(target=self.human_vs_machine, args=(q_in, q_out, False))
             GUI_thread.start()
-            bot1 = AlphaBetaBot('r', 'y', 3)
+            bot1 = AlphaBetaBot('y', 'r', 7)
             bot1_thread = Bot_thread(bot1, 'y', 'r', q_in, q_out)
             bot1_thread.start()
         elif mode == 4:

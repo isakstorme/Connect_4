@@ -12,6 +12,6 @@ class Bot_thread(threading.Thread):
 
     def run(self):
         while True:
-            print(self.q_in.qsize())
             grid = self.q_in.get()
-            self.q_out.put(self.bot.move(grid, self.botsign))
+            move = self.bot.move(grid, self.botsign)
+            self.q_out.put(move)
