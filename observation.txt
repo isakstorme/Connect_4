@@ -1,0 +1,1 @@
+I know the code is not optimised for numpy but using np arrays does not seem promissing for this specific problem.

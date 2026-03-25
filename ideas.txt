@@ -1,5 +1,7 @@
 * Change so alphabetabot is incentivised to find fastest win if it is winning.
 
+* Change order in which moves are analysed
+
 * Maybe implement strategy pattern where alphabetabot takes
   a function evaluate or subclasses of evaluatestrategy.
 

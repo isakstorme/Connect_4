@@ -1,6 +1,5 @@
 from rules.connect4 import Connect4
 from bots.randombot import RandomBot
-from bots.minimaxbot import MiniMaxBot
 from bots.alphabetabot import AlphaBetaBot
 
 def human_vs_machine():

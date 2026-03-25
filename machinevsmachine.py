@@ -1,6 +1,5 @@
 from rules.connect4 import Connect4
 from bots.randombot import RandomBot
-from bots.minimaxbot import MiniMaxBot
 from bots.alphabetabot import AlphaBetaBot
 import time
 
@@ -35,7 +34,6 @@ def machine_vs_machine():
             game.move(c)
             game.display_position()
             player_to_move = game.player_to_move
-        time.sleep(0.5)
     
     if game.game_drawn:
         print("game ended in a draw")

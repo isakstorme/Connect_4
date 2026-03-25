@@ -1,6 +1,6 @@
 from .gamenode import GameNode
 from .import eval
-
+import time
 class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
     def __init__(self, botsign, opponentsign, maxdepth, evaluate=eval.evaluate):
         self.botsign = botsign
@@ -37,13 +37,12 @@ class AlphaBetaBot:   # This bot uses minimax with Alpha Beta pruning
                     if beta <= alpha:
                         break
         return value, bestmove
-
-    def pick_move(self, node):
-        move = self.alpha_beta(node=node, depth=self.maxdepth, alpha=-self.INF, beta=self.INF, max_mode=True)[1]
-        return move
         
 
     def move(self, grid, player_to_move):
-
         node = GameNode(grid, None, player_to_move, self.botsign, self.opponentsign)
-        return self.pick_move(node)
+        t0 = time.time()
+        move = self.alpha_beta(node=node, depth=self.maxdepth, alpha=-self.INF, beta=self.INF, max_mode=True)[1]
+        t1 = time.time()
+        print("time for computing move= ", t1 - t0, " seconds")
+        return move
