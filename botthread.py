@@ -1,5 +1,6 @@
 import threading
 from queue import Queue
+import time
 
 class Bot_thread(threading.Thread):
     def __init__(self, bot, botsign, opponentsign, q_in, q_out):
@@ -14,5 +15,8 @@ class Bot_thread(threading.Thread):
     def run(self):
         while True:
             grid = self.q_in.get()
+            t0 = time.time()
             move = self.bot.move(grid, self.botsign)
+            t1 = time.time()
+            print(t1 - t0)
             self.q_out.put(move)
