@@ -22,10 +22,4 @@ class GameNode:
             children.append(new_node)
         return children
     
-    def hash(self):
-        result = []
-        for r in range(6):
-            for c in range(7):
-                result.append(self.grid[r][c])
-        result= "".join(result)
     

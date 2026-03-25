@@ -10,15 +10,24 @@ class Stormefish:   # This bot uses minimax with Alpha Beta pruning
         self.WIN = 1000
         self.LOSS = -1000
         self.evaluate = evaluate
-        self.transposition_table = dict() # In chess hashed maps are typically used it seems.
+        self.transposition_table = dict() # In chess hashed maps are typically used it seems and seems very reasonable here.
     
+    def hash(self, grid, depth):
+        result = []
+        for r in range(6):
+            for c in range(7):
+                result.append(grid[r][c])
+        result.append(str(depth))
+        result= "".join(result)
+        return result
 
     def alpha_beta(self, node, depth, alpha, beta, max_mode):  # max_mode = True or False 
         value = self.evaluate(node)
         if depth == 0 or node.bot_won or node.opponent_won or node.is_full:
             return value, None
-        hash = node.hash()
+        hash = self.hash(node.grid, depth)
         if hash in self.transposition_table:
+            #print(hash)
             return self.transposition_table[hash]
         
         
@@ -41,7 +50,7 @@ class Stormefish:   # This bot uses minimax with Alpha Beta pruning
                     bestmove = child.move
                     if beta <= alpha:
                         break
-        self.transposition_table[node.hash()] = value, bestmove
+        self.transposition_table[hash] = value, bestmove
         return value, bestmove
         
 

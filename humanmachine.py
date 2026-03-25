@@ -15,9 +15,12 @@ def human_vs_machine():
 
     bot = RandomBot()
     if bot_choice == 2:
-        bot = AlphaBetaBot(opponentsign=human, botsign=bot, maxdepth=7)
+        max_depth = int(input("give maximum depth for AlphaBetaBot"))
+        bot = AlphaBetaBot(opponentsign=human, botsign=bot, maxdepth=max_depth)
     elif bot_choice == 3:
-        bot = Stormefish(opponentsign=human, botsign=bot, maxdepth=7)
+        max_depth = int(input("give maximum depth for Storefish"))
+        bot = AlphaBetaBot(opponentsign=human, botsign=bot, maxdepth=max_depth)
+        bot = Stormefish(opponentsign=human, botsign=bot, maxdepth=10)
     game = Connect4()
     player_to_move = "y"
     while not game.game_finished:

@@ -1,25 +1,32 @@
 from rules.connect4 import Connect4
 from bots.randombot import RandomBot
 from bots.alphabetabot import AlphaBetaBot
+from bots.stormefish import Stormefish
 import time
 
 def machine_vs_machine():
-    bot1_choice = int(input("if you want bot 1 to be RandomBot type 1\nif you want bot 1 to be AlphaBetaBot type 2\n"))
+    bot1_choice = int(input("if you want bot 1 to be RandomBot type 1\nif you want bot 1 to be AlphaBetaBot type 2\nif you want bot 1 to be Stormefish type 3"))
 
-    if bot1_choice == 2:
+    if bot1_choice == 2 or bot1_choice == 3:
         bot1_depth = int(input("Write the number of half moves that bot 1 shall be able to calculate maximally: "))
 
-    bot2_choice = int(input("if you want bot 2 to be RandomBot type 1\nif you want bot 2 to be AlphaBetaBot type 2\n"))
+    bot2_choice = int(input("if you want bot 2 to be RandomBot type 1\nif you want bot 2 to be AlphaBetaBot type 2\nif you want bot 2 to be Stormefish type 3"))
 
-    if bot2_choice == 2:
+    if bot2_choice == 2 or bot2_choice == 3:
         bot2_depth = int(input("Write the number of half moves that bot 2 shall be able to calculate maximally: "))
     
     bot1sign = "y"
     bot2sign = "r"
 
     bot1 = AlphaBetaBot(opponentsign=bot2sign, botsign=bot1sign, maxdepth=bot1_depth) if bot1_choice == 2 else RandomBot()
+    if bot1_choice == 3:
+        print("bot1 is stormefish with depth ", bot1_depth)
+        bot1 = Stormefish(opponentsign=bot2sign, botsign=bot1sign, maxdepth=bot1_depth)
+    
     bot2 = AlphaBetaBot(opponentsign=bot1sign, botsign=bot2sign, maxdepth=bot2_depth) if bot2_choice == 2 else RandomBot()
-
+    if bot2_choice == 3:
+        print("bot2 is stormefish with depth ", bot2_depth)
+        bot2 = Stormefish(opponentsign=bot1sign, botsign=bot2sign, maxdepth=bot2_depth)
     game = Connect4()
     player_to_move = "y"
     while not game.game_finished:
