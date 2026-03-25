@@ -62,7 +62,7 @@ class Main:
         has_put = False
         while running:
             player_to_move = game.player_to_move
-            if player_to_move == 'y' and player1_is_bot:
+            if player_to_move == 1 and player1_is_bot:
                 if q1_in.empty() and not has_put:
                     q1_in.put(game.grid)
                     has_put = True
@@ -70,7 +70,7 @@ class Main:
                     c = q1_out.get()
                     self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
                     has_put = False
-            elif player_to_move == 'r' and player2_is_bot:
+            elif player_to_move == 2 and player2_is_bot:
                 if q2_in.empty() and not has_put:
                     q2_in.put(game.grid)
                     has_put = True
@@ -85,11 +85,11 @@ class Main:
                     return
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if player_to_move == 'y' and not player1_is_bot:
+                    if player_to_move == 1 and not player1_is_bot:
                         x = pygame.mouse.get_pos()[0]
                         c = x // SQUARESIZE
                         self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
-                    elif player_to_move == 'r' and not player2_is_bot:
+                    elif player_to_move == 2 and not player2_is_bot:
                         x = pygame.mouse.get_pos()[0]
                         c = x // SQUARESIZE
                         self.move_graphics(screen, next_draw, game, SQUARESIZE, yellow, red, player_to_move, c)
@@ -131,7 +131,7 @@ class Main:
         game.display_position()
         new_player_to_move = game.player_to_move
         if new_player_to_move != player_to_move: # If move was valid
-            color = red if player_to_move == "r" else yellow
+            color = red if player_to_move == 2 else yellow
             pygame.draw.circle(screen, color, ((c + 0.5)*SQUARESIZE, ((next_draw[c] + 0.5)*SQUARESIZE)), SQUARESIZE/2)
             next_draw[c] -= 1
             pygame.display.flip()
@@ -151,7 +151,7 @@ class Main:
 
     def run(self):  
 
-        mode = 2
+        mode = int(input("1 for human vs human\n2 for human vs machine\n3 for machine vs human\n4 for machine vs machine"))
 
         if mode == 1:
             GUI_thread = threading.Thread(target=self.human_vs_human)
@@ -161,31 +161,29 @@ class Main:
             q_out = Queue()
             GUI_thread = threading.Thread(target=self.human_vs_machine, args=(q_in, q_out, True))
             GUI_thread.start()
-            bot1 = AlphaBetaBot('r', 'y', 7)
-            bot1_thread = Bot_thread(bot1, 'r', 'y', q_in, q_out)
+            bot1 = AlphaBetaBot(2, 1, 7)
+            bot1_thread = Bot_thread(bot1, 2, 1, q_in, q_out)
             bot1_thread.start()
-        elif mode == 3:    # When exiting the window in mode 3 it pops up again, fix!
+        elif mode == 3:  
             q_in = Queue()
             q_out = Queue()
             GUI_thread = threading.Thread(target=self.human_vs_machine, args=(q_in, q_out, False))
             GUI_thread.start()
-            bot1 = AlphaBetaBot('y', 'r', 7)
-            bot1_thread = Bot_thread(bot1, 'y', 'r', q_in, q_out)
+            bot1 = AlphaBetaBot(1, 2, 7)
+            bot1_thread = Bot_thread(bot1, 1, 2, q_in, q_out)
             bot1_thread.start()
-        elif mode == 4:
-            bot1_waiting = True
-            bot2_waiting = True  
+        elif mode == 4: 
             q1_in = Queue()  # in signals in for bot_thread
             q1_out = Queue()
             q2_in = Queue() # in signals in for bot_thread
             q2_out = Queue()
             GUI_thread = threading.Thread(target=self.machine_vs_machine, args=(q1_in, q1_out, q2_in, q2_out))
             GUI_thread.start()
-            bot1 = AlphaBetaBot('y', 'r', 3)
-            bot1_thread = Bot_thread(bot1, 'y', 'r', q1_in, q1_out)
+            bot1 = AlphaBetaBot(1, 2, 3)
+            bot1_thread = Bot_thread(bot1, 1, 2, q1_in, q1_out)
             bot1_thread.start()
-            bot2 = AlphaBetaBot('y', 'r', 3)
-            bot2_thread = Bot_thread(bot2, 'r', 'y', q2_in, q2_out)
+            bot2 = AlphaBetaBot(1, 2, 3)
+            bot2_thread = Bot_thread(bot2, 2, 1, q2_in, q2_out)
             bot2_thread.start()
             
 

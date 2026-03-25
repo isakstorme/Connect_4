@@ -12,7 +12,7 @@ class GameNode:
         self.is_full = connect4helper.is_full(grid=grid)
     
     def children(self):
-        next_player_to_move = "y" if self.player_to_move == "r" else "r"
+        next_player_to_move = 1 if self.player_to_move == 2 else 2
         children = []
         for move in connect4helper.valid_moves(self.grid):
             new_grid = connect4helper.copy_and_move(self.grid, move, self.player_to_move)

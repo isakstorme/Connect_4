@@ -5,11 +5,8 @@ from bots.alphabetabot import AlphaBetaBot
 
 def human_vs_machine():
     player_choice = (input("if you want to start, type y, else type r"))
-    human = "y"
-    botsign = "r"
-    if player_choice == "r":
-        human = "r"
-        botsign = "y"
+    human = 1 if player_choice == 'y' else 2
+    botsign = 2 if player_choice == 'y' else 1
     
     bot_choice = int(input("if you want to play against randomBot, type 1\nif you want to play against MiniMaxBot type 2\nif you want to play against AlphaBetaBot type 3"))
 
@@ -19,7 +16,7 @@ def human_vs_machine():
     elif bot_choice == 3:
         bot = AlphaBetaBot(opponentsign=human, botsign=botsign, maxdepth=8)
     game = Connect4()
-    player_to_move = "y"
+    player_to_move = 1
     while not game.game_finished:
         if player_to_move == human:
             c = int(input("c: "))

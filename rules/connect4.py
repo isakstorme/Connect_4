@@ -1,10 +1,12 @@
+import numpy as np
+
 class Connect4:
     def __init__(self):
         self.grid = self.init_grid()
         self.height = len(self.grid)
         self.width = len(self.grid[0])
-        self.players = ["y", "r"]
-        self.player_to_move = "y" # It seems yellow starts in connect4
+        self.players = [1, 2]
+        self.player_to_move = 1 # It seems yellow starts in connect4
         self.yellow_wins = False
         self.red_wins = False
         self.game_drawn = False
@@ -14,8 +16,8 @@ class Connect4:
     def init_grid(self):
         result = []
         for r in range(6):
-            result.append(["-", "-", "-", "-", "-", "-", "-"])
-        return result
+            result.append([0, 0, 0, 0, 0, 0, 0])
+        return np.array(result)
     
     def display_position(self):
         print("0  ", " 1  ", " 2  ", " 3  ", " 4  ", " 5  ", " 6")
@@ -30,7 +32,7 @@ class Connect4:
             return
         
         r = 0
-        while self.grid[r][c] != "-":
+        while self.grid[r][c] != 0:
             r += 1
             if r == self.height:
                 return
@@ -41,7 +43,7 @@ class Connect4:
         elif self.is_full():
             self.set_draw()
 
-        self.player_to_move = "y" if self.player_to_move == "r" else "r"
+        self.player_to_move = 1 if self.player_to_move == 2 else 2
 
 
 
@@ -133,15 +135,15 @@ class Connect4:
     
     def is_full(self):
         for c in range(self.width):
-            if self.grid[self.height - 1][c] == "-":
+            if self.grid[self.height - 1][c] == 0:
                 return False
         
         return True
     
     def set_player_win(self, p):
-        if p == "r":
+        if p == 2:
             self.red_wins = True
-        elif p == "y":
+        elif p == 1:
             self.yellow_wins = True
         
         self.game_finished = True

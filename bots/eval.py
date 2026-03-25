@@ -15,7 +15,7 @@ def evaluate_basic(node):
 def number_possible_diag_wins_down(grid, p):
     h = len(grid)
     w = len(grid[0])
-    op = "y" if p == "r" else "r"
+    op = 1 if p == 2 else 2
 
     result = 0
 
@@ -31,7 +31,7 @@ def number_possible_diag_wins_down(grid, p):
 def number_possible_diag_wins_up(grid, p):
     h = len(grid)
     w = len(grid[0])
-    op = "y" if p == "r" else "r"
+    op = 1 if p == 2 else 2
 
     result = 0
 
@@ -47,7 +47,7 @@ def number_possible_diag_wins_up(grid, p):
 def number_possible_vertical_wins(grid, p):
     h = len(grid)
     w = len(grid[0])
-    op = "y" if p == "r" else "r"
+    op = 1 if p == 2 else 2
 
     result = 0
 
@@ -62,7 +62,7 @@ def number_possible_vertical_wins(grid, p):
 def number_possible_horizontal_wins(grid, p):
     h = len(grid)
     w = len(grid[0])
-    op = "y" if p == "r" else "r"
+    op = 1 if p == 2 else 2
 
     result = 0
 

@@ -1,27 +1,20 @@
-def copy_position(grid):
-    h = len(grid)
-    w = len(grid[0])
-    copy = [["-", "-", "-", "-", "-", "-", "-"] for i in range(h)]
-    for r in range(h):
-        for c in range(w):
-            copy[r][c] = grid[r][c]
-    return copy
+import numpy as np
 
 def valid_moves(grid):
     h = len(grid)
     w = len(grid[0])
     moves = []
     for c in range(w):
-        if grid[h - 1][c] == "-":
+        if grid[h - 1][c] == 0:
             moves.append(c)
     return moves
 
 def copy_and_move(grid, c, p):
     h = len(grid)
-    newgrid = copy_position(grid)
+    newgrid = np.copy(grid)
     r = 0
     while r < h:
-        if newgrid[r][c] == "-":
+        if newgrid[r][c] == 0:
             break
         r += 1
     
@@ -130,7 +123,7 @@ def is_full(grid):
     w = len(grid[0])
 
     for c in range(w):
-        if grid[h - 1][c] == "-":
+        if grid[h - 1][c] == 0:
             return False
     
     return True

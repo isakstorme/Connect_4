@@ -1,8 +1,21 @@
-* Change so alphabetabot is incentivised to find fastest win if it is winning.
+* Rewrite to use numpy
 
-* Maybe implement strategy pattern where alphabetabot takes
-  a function evaluate or subclasses of evaluatestrategy.
+* Make "optimal bot, using transposition tables"
+
+* Try using reinforcement learning
+
+* Need to introduce threads in GUI, one for calculating the move so Game loop does not get stuck for several seconds and one for the graphics.
+
+*Important: create GUI, more or less like this: https://www.youtube.com/watch?v=XpYz-q1lxu8
+
+* Change to Numpy arrays and see if it becomes faster
+
+* Try to make sure files that start game are located in some directory instead of just at highest level of file hierarchy.
+
+* Change so alphabetabot is incentivised to find fastest win if it is winning.
 
 * Restructure so files are located in reasonable places
 
 * Find a way to not duplicate  win and loss values for eval functions. I have it both in alphabetabot and in eval
+
+* Change so GUI is not hard coded, so it can create gui if you change number of columns

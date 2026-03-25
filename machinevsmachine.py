@@ -15,14 +15,14 @@ def machine_vs_machine():
     if bot2_choice == 2:
         bot2_depth = int(input("Write the number of half moves that bot 2 shall be able to calculate maximally: "))
     
-    bot1sign = "y"
-    bot2sign = "r"
+    bot1sign = 1
+    bot2sign = 2
 
     bot1 = AlphaBetaBot(opponentsign=bot2sign, botsign=bot1sign, maxdepth=bot1_depth) if bot1_choice == 2 else RandomBot()
     bot2 = AlphaBetaBot(opponentsign=bot1sign, botsign=bot2sign, maxdepth=bot2_depth) if bot2_choice == 2 else RandomBot()
 
     game = Connect4()
-    player_to_move = "y"
+    player_to_move = 1
     while not game.game_finished:
         if player_to_move == bot1sign:
             c = bot1.move(game.grid, player_to_move)
