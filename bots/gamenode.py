@@ -14,8 +14,18 @@ class GameNode:
     def children(self):
         next_player_to_move = "y" if self.player_to_move == "r" else "r"
         children = []
-        for move in connect4helper.valid_moves(self.grid):
+        moves = connect4helper.valid_moves(self.grid)
+        moves.sort(key=lambda i: (i - 3) if i>3 else -(i-3)) # sorts so that the moe in the centre comes first.
+        for move in moves: 
             new_grid = connect4helper.copy_and_move(self.grid, move, self.player_to_move)
             new_node = GameNode(new_grid, move, next_player_to_move, self.botsign, self.opponentsign)
             children.append(new_node)
         return children
+    
+    def hash(self):
+        result = []
+        for r in range(6):
+            for c in range(7):
+                result.append(self.grid[r][c])
+        result= "".join(result)
+    

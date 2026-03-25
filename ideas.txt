@@ -1,3 +1,5 @@
+* Try to see if I can use Q-learning or some other reinforcement method that I have yet to learn
+
 * Change so alphabetabot is incentivised to find fastest win if it is winning.
 
 * Change order in which moves are analysed
@@ -8,3 +10,5 @@
 * Restructure so files are located in reasonable places
 
 * Find a way to not duplicate  win and loss values for eval functions. I have it both in alphabetabot and in eval
+
+* After done in python I might try to write in c++ but optimized with bitboards
